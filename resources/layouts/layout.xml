@@ -1,0 +1,7 @@
+<layout id="WatchFace">
+    <label id="HourLabel" x="115" y="center" font="Rez.Fonts.SteelfishLargeBold" justification="Gfx.TEXT_JUSTIFY_RIGHT" color="Gfx.COLOR_WHITE" />
+    <label id="MinuteLabel" x="115" y="center" font="Rez.Fonts.SteelfishLarge" justification="Gfx.TEXT_JUSTIFY_LEFT" color="Gfx.COLOR_BLUE" />
+	<label id="DateLabel" x="center" y="175" font="Gfx.FONT_SMALL" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_WHITE" />
+	<label id="kmLeftLabel" x="center" y="10" font="Gfx.FONT_SMALL" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_WHITE" />
+	<label id="kmLeftDesc" text="km left" x="center" y="30" font="Gfx.FONT_SMALL" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_WHITE" />
+</layout>
