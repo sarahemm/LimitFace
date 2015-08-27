@@ -30,23 +30,32 @@ class LimitFaceView extends Ui.WatchFace {
     function onUpdate(dc) {
         // Get and show the current time
         var clockTime = Sys.getClockTime();
-        var hourString = Lang.format("$1$", [clockTime.hour.format("%02d")]);
-        var minString = Lang.format("$1$", [clockTime.min.format("%02d")]);
-        var hourView = View.findDrawableById("HourLabel");
-        var minView = View.findDrawableById("MinuteLabel");
-        // FIXME: these should use the actual font, but it fails with a confusing error
-        var hourWidth = dc.getTextWidthInPixels(hourString, Gfx.FONT_NUMBER_THAI_HOT);
-        var minWidth = dc.getTextWidthInPixels(minString, Gfx.FONT_NUMBER_THAI_HOT);
-		var centerOffset = hourWidth - minWidth;
-        hourView.setText(hourString);
-        minView.setText(minString);
-        hourView.setLocation(dc.getWidth()/2 + centerOffset, hourView.locY);
-        minView.setLocation(dc.getWidth()/2 + centerOffset, hourView.locY);
+		var timeString = "Unknown";
+        if(clockTime.hour >= 5 && clockTime.hour <= 7) {
+        	timeString = "Early Morning";
+        } else if(clockTime.hour >= 8 && clockTime.hour <= 10) {
+        	timeString = "Late Morning";
+        } else if(clockTime.hour >= 11 && clockTime.hour <= 13) {
+        	timeString = "Midday";
+        } else if(clockTime.hour >= 14 && clockTime.hour <= 17) {
+        	timeString = "Mid-afternoon";
+        } else if(clockTime.hour >= 18 && clockTime.hour <= 20) {
+        	timeString = "Early Evening";
+        } else if(clockTime.hour >= 21 && clockTime.hour <= 22) {
+        	timeString = "Late Evening";
+        } else if(clockTime.hour == 23 || clockTime.hour == 0) {
+        	timeString = "Early Night";
+        } else if(clockTime.hour >= 1 && clockTime.hour <= 2) {
+        	timeString = "Mid-night";
+        } else if(clockTime.hour >= 3 && clockTime.hour <= 4) {
+        	timeString = "Late Night";
+		}
+        var timeView = View.findDrawableById("TimeLabel").setText(timeString);
                 
         // Get and show the current date
 		var now = Time.now();
  		var dateInfo = Gregorian.info(now, Time.FORMAT_MEDIUM);
-        var dateString = Lang.format("$1$ $2$", [dateInfo.month.toUpper(), dateInfo.day]);
+        var dateString = Lang.format("$1$", [dateInfo.day_of_week.toUpper()]);
         var dateView = View.findDrawableById("DateLabel");
         dateView.setText(dateString);
         
@@ -98,6 +107,8 @@ class LimitFaceView extends Ui.WatchFace {
 			arcColor = Gfx.COLOR_GREEN;
 		} else if(kmWalkedDegrees < 270) {
 			arcColor = Gfx.COLOR_YELLOW;
+		} else if(kmWalkedDegrees <= 359) {
+			arcColor = Gfx.COLOR_ORANGE;
 		} else {
 			arcColor = Gfx.COLOR_RED;
 		}
