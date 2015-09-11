@@ -31,24 +31,24 @@ class LimitFaceView extends Ui.WatchFace {
         // Get and show the current time
         var clockTime = Sys.getClockTime();
 		var timeString = "Unknown";
-        if(clockTime.hour >= 5 && clockTime.hour <= 7) {
-        	timeString = "Early Morning";
-        } else if(clockTime.hour >= 8 && clockTime.hour <= 10) {
-        	timeString = "Late Morning";
-        } else if(clockTime.hour >= 11 && clockTime.hour <= 13) {
-        	timeString = "Midday";
-        } else if(clockTime.hour >= 14 && clockTime.hour <= 17) {
-        	timeString = "Mid-afternoon";
-        } else if(clockTime.hour >= 18 && clockTime.hour <= 20) {
-        	timeString = "Early Evening";
-        } else if(clockTime.hour >= 21 && clockTime.hour <= 22) {
-        	timeString = "Late Evening";
-        } else if(clockTime.hour == 23 || clockTime.hour == 0) {
+        if(clockTime.hour == 23 || clockTime.hour == 0) {
         	timeString = "Early Night";
-        } else if(clockTime.hour >= 1 && clockTime.hour <= 2) {
+        } else if(clockTime.hour <= 2) {
         	timeString = "Mid-night";
-        } else if(clockTime.hour >= 3 && clockTime.hour <= 4) {
+        } else if(clockTime.hour <= 4) {
         	timeString = "Late Night";
+        } else if(clockTime.hour <= 7) {
+        	timeString = "Early Morning";
+        } else if(clockTime.hour <= 10) {
+        	timeString = "Morning";
+        } else if(clockTime.hour <= 13) {
+        	timeString = "Midday";
+        } else if(clockTime.hour <= 17) {
+        	timeString = "Afternoon";
+        } else if(clockTime.hour <= 20) {
+        	timeString = "Early Evening";
+        } else if(clockTime.hour <= 22) {
+        	timeString = "Late Evening";
 		}
         var timeView = View.findDrawableById("TimeLabel").setText(timeString);
                 
