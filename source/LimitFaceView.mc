@@ -98,6 +98,8 @@ class LimitFaceView extends Ui.WatchFace {
 			arcColor = Gfx.COLOR_GREEN;
 		} else if(kmWalkedDegrees < 270) {
 			arcColor = Gfx.COLOR_YELLOW;
+		} else if(kmWalkedDegrees <= 359) {
+			arcColor = Gfx.COLOR_ORANGE;	
 		} else {
 			arcColor = Gfx.COLOR_RED;
 		}
