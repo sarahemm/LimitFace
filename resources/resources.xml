@@ -1,6 +1,6 @@
 <resources>
     <string id="AppName">LimitFace</string>
-
+	
     <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
     
     <font id="SteelfishLarge" filename="fonts/steelfish_large.fnt" filter="0123456789" />

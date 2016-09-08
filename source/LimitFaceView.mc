@@ -15,6 +15,10 @@ class LimitFaceView extends Ui.WatchFace {
 	var CLOCKWISE = -1;
 	var COUNTERCLOCKWISE = 1;
 	
+	function initialize() {
+		WatchFace.initialize();
+	}
+	
     //! Load your resources here
     function onLayout(dc) {
         setLayout(Rez.Layouts.WatchFace(dc));
