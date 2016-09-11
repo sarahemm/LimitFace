@@ -32,9 +32,16 @@ class LimitFaceView extends Ui.WatchFace {
 
     //! Update the view
     function onUpdate(dc) {
+    	var settings = Sys.getDeviceSettings();
         // Get and show the current time
         var clockTime = Sys.getClockTime();
-        var hourString = Lang.format("$1$", [clockTime.hour.format("%02d")]);
+		var hourString = "";
+        if(settings.is24Hour) {
+	        hourString = Lang.format("$1$", [clockTime.hour.format("%02d")]);
+		} else {
+			var hour12Hour = clockTime.hour % 12;
+	        hourString = Lang.format("$1$", [hour12Hour.format("%d")]);
+		}
         var minString = Lang.format("$1$", [clockTime.min.format("%02d")]);
         var hourView = View.findDrawableById("HourLabel");
         var minView = View.findDrawableById("MinuteLabel");
@@ -56,6 +63,10 @@ class LimitFaceView extends Ui.WatchFace {
         
         // Get and show how much distance we have left today
 		var activity = ActivityMonitor.getInfo();
+		var unitText = "km";
+		if(settings.distanceUnits == Sys.UNIT_STATUTE) {
+			unitText = "mi";
+		}
 		var leftString = "";
 		var cmGoal = 0;
 		var kmLeftToday = 0;
@@ -63,7 +74,12 @@ class LimitFaceView extends Ui.WatchFace {
 			var cmPerStep = activity.distance.toFloat() / activity.steps.toFloat();
 			cmGoal = activity.stepGoal.toFloat() * cmPerStep;
 			kmLeftToday = (cmGoal - activity.distance.toFloat()) / (100 * 1000);
-			leftString = Lang.format("$1$", [kmLeftToday.abs().format("%0.2f")]);
+			if(settings.distanceUnits == Sys.UNIT_STATUTE) {
+				var miLeftToday = kmLeftToday * 0.621371;
+				leftString = Lang.format("$1$", [miLeftToday.abs().format("%0.2f")]);			
+			} else {
+				leftString = Lang.format("$1$", [kmLeftToday.abs().format("%0.2f")]);
+			}
         }
         var leftView = View.findDrawableById("kmLeftLabel");
 		leftView.setText(leftString);
@@ -71,11 +87,11 @@ class LimitFaceView extends Ui.WatchFace {
 		if(leftString.equals("")) {
 			leftDescView.setText("");
 		} else if(kmLeftToday > 0) {
-			leftDescView.setText("km left");
+			leftDescView.setText(unitText + " left");
 			leftView.setColor(Gfx.COLOR_GREEN);
 			leftDescView.setColor(Gfx.COLOR_GREEN);
 		} else {
-			leftDescView.setText("km too far");
+			leftDescView.setText(unitText + " too far");
 			leftView.setColor(Gfx.COLOR_RED);
 			leftDescView.setColor(Gfx.COLOR_RED);
 		}
